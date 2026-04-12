@@ -2,7 +2,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
 <style>
-:root {
+.pf-full {
   --paper:   #F5F2EB;
   --paper2:  #EDE9DF;
   --paper3:  #E3DECE;
@@ -15,43 +15,14 @@
   --copperbg:#F5EDE2;
   --white:   #FDFCF9;
   --rule:    rgba(26,23,20,.1);
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--paper);
-  color: var(--ink);
   font-family: 'Pretendard', -apple-system, system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
-
-/* grain */
-body::before {
-  content: ''; position: fixed; inset: 0; z-index: 900; pointer-events: none; opacity: .018;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+[data-scheme="dark"] .pf-full {
+  --paper: #141210; --paper2: #1e1c19; --paper3: #28251f;
+  --ink: #e8e4dc; --ink2: #c4bfb6; --ink3: #8A837A; --ink4: #5a554e;
+  --copper: #C98848; --copper2: #daa060; --copperbg: #2a2218;
+  --white: #1a1816; --rule: rgba(255,255,255,.08);
 }
-
-/* ── NAV ── */
-.nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 clamp(24px,5vw,72px); height: 56px;
-  background: rgba(245,242,235,.92);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--rule);
-}
-.nav-name { font-size: 13px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--ink); }
-.nav-right { display: flex; align-items: center; gap: 28px; }
-.nav-right a { font-size: 12px; font-weight: 500; color: var(--ink3); text-decoration: none; letter-spacing: .02em; transition: color .15s; }
-.nav-right a:hover { color: var(--ink); }
-.nav-cta {
-  padding: 7px 18px; background: var(--ink); color: var(--paper) !important;
-  border-radius: 2px; font-weight: 700 !important; font-size: 12px !important;
-  transition: background .2s !important;
-}
-.nav-cta:hover { background: var(--ink2) !important; }
 
 /* ── LAYOUT ── */
 .pg { padding: 0 clamp(24px,5vw,72px); max-width: 1200px; margin: 0 auto; }
@@ -143,15 +114,21 @@ body::before {
 .chip-live { background: var(--ink); color: var(--paper); }
 
 @media (max-width: 720px) {
-  .trow { grid-template-columns: 36px 1fr; }
-  .trow > *:last-child { grid-column: 2; margin-top: 6px; }
-  .crow { grid-template-columns: 100px 1fr; }
-  .crow > *:last-child { grid-column: 2; margin-top: 6px; }
-  .hero-bottom { flex-direction: column !important; gap: 24px !important; }
-  .hide-m { display: none !important; }
+  .pf-full .trow { grid-template-columns: 36px 1fr; }
+  .pf-full .trow > *:last-child { grid-column: 2; margin-top: 6px; }
+  .pf-full .crow { grid-template-columns: 1fr; }
+  .pf-full .crow > * { grid-column: 1; }
+  .pf-full .crow > *:not(:first-child) { margin-top: 8px; }
+  .pf-full [style*="grid-template-columns:1fr 1fr"],
+  .pf-full [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+  .pf-full [style*="grid-template-columns:140px 1fr 1fr"] { grid-template-columns: 1fr !important; }
+  .pf-full .hero-bottom { flex-direction: column !important; gap: 16px !important; }
+  .pf-full .display-ko { font-size: 2.4rem !important; }
+  .pf-full .hide-m { display: none !important; }
 }
 </style>
 
+<div class="pf-full">
 <!-- ═══════════════ HERO ═══════════════ -->
 <section style="min-height:70vh; display:flex; flex-direction:column; justify-content:flex-end;">
   <div class="pg" style="padding-top:80px; padding-bottom:0; flex:1; display:flex; flex-direction:column; justify-content:space-between;">
@@ -581,7 +558,8 @@ body::before {
   </div>
 </section>
 
-<!-- Footer -->
+</div><!-- end .pf-full -->
+
 <script>
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }), { threshold: .06 });
 document.querySelectorAll('.fade').forEach(el => io.observe(el));
