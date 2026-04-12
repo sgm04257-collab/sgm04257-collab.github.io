@@ -2,6 +2,7 @@
 title: "소개"
 description: "조소연 — HRD & 조직문화 전문가"
 slug: "about"
+layout: "portfolio"
 ---
 
 ## 조소연
