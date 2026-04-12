@@ -12,7 +12,7 @@ paginate = 10
   [params.sidebar]
     emoji = ''
     subtitle = 'HRD · 조직문화 · AI'
-    avatar = ""
+    avatar = "img/avatar.png"
     compact = false
 
   [params.article]
