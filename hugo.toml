@@ -46,7 +46,7 @@ paginate = 10
   [[menu.main]]
     identifier = 'about'
     name = '소개'
-    url = '/about/'
+    url = '/page/about/'
     weight = 2
     [menu.main.params]
       icon = 'user'
@@ -54,7 +54,7 @@ paginate = 10
   [[menu.main]]
     identifier = 'archives'
     name = '글 목록'
-    url = '/archives/'
+    url = '/page/archives/'
     weight = 3
     [menu.main.params]
       icon = 'archives'

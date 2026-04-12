@@ -88,7 +88,7 @@
           <em style="color:var(--copper); font-style:italic;">행복하게 일하는<br>세상</em>을 만들고 싶습니다"
         </p>
         <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <a href="/about/" class="btn btn-ink">자세히 보기</a>
+          <a href="/page/about/" class="btn btn-ink">자세히 보기</a>
           <a href="https://www.linkedin.com/in/soniacho/" target="_blank" class="btn btn-ghost">LinkedIn</a>
         </div>
       </div>
@@ -110,7 +110,7 @@
   <div class="pg">
     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:36px;">
       <h2 style="font-size:1.4rem; font-weight:800; letter-spacing:-.02em; color:var(--ink);">최근 글</h2>
-      <a href="/archives/" style="font-size:12px; font-weight:600; color:var(--copper); text-decoration:none; letter-spacing:.04em;">전체 보기 →</a>
+      <a href="/page/archives/" style="font-size:12px; font-weight:600; color:var(--copper); text-decoration:none; letter-spacing:.04em;">전체 보기 →</a>
     </div>
     {{ range first 3 (where .Site.RegularPages "Section" "post") }}
     <a href="{{ .Permalink }}" style="display:block; padding:20px 0; border-top:1px solid var(--rule); text-decoration:none; transition:background .2s;">
