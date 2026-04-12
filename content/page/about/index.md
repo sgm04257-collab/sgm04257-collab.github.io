@@ -2,7 +2,6 @@
 title: "소개"
 description: "조소연 — HRD & 조직문화 전문가"
 slug: "about"
-layout: "about"
 ---
 
 ## 조소연
@@ -48,9 +47,15 @@ layout: "about"
 - 사회조사분석사 2급
 - GAIQ (Google Analytics)
 - 실전 노동법 정규반 수료
-- 서울대학원 용산 해커톤 투어 기획대회 **최우수상**
+- 서울대학원 용산 해커톤 투어 기획대회 **최우수상** — [기사](https://www.lafent.com/mbweb/news/view.html?news_id=120859)
 - Social Innovation Fair 경진대회 **우수상**
-- 제4회 사회적 기업 아이디어 경진대회 **장려상**
+- 제4회 사회적 기업 아이디어 경진대회 **장려상** — [기사](https://www.thescoop.co.kr/news/articleView.html?idxno=50802)
+
+---
+
+### 프로젝트
+
+- **역곡로켓단** — 부천시 역곡동 대학로 상권 활성화 프로젝트 — [기사](https://www.thescoop.co.kr/news/curationView.html?idxno=51014)
 
 ---
 
