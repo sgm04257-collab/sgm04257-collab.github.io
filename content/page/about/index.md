@@ -1,11 +1,6 @@
 ---
 title: "소개"
 description: "조소연 — HRD & 조직문화 전문가"
-menu:
-  main:
-    weight: 2
-    params:
-      icon: user
 slug: "about"
 layout: "about"
 ---
