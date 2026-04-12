@@ -1,0 +1,165 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
+
+<style>
+.pf-root {
+  --paper: #F5F2EB; --paper2: #EDE9DF; --ink: #1A1714; --ink2: #4A4540;
+  --ink3: #8A837A; --ink4: #BEB8B0; --copper: #B07040; --copper2: #C98848;
+  --copperbg: #F5EDE2; --white: #FDFCF9; --rule: rgba(26,23,20,.1);
+  font-family: 'Pretendard', -apple-system, system-ui, sans-serif;
+}
+[data-scheme="dark"] .pf-root {
+  --paper: #141210; --paper2: #1e1c19; --ink: #e8e4dc; --ink2: #c4bfb6;
+  --ink3: #8A837A; --ink4: #5a554e; --copper: #C98848; --copper2: #daa060;
+  --copperbg: #2a2218; --white: #1a1816; --rule: rgba(255,255,255,.08);
+}
+.pf-root .pg { padding: 0 clamp(24px,5vw,72px); max-width: 1100px; margin: 0 auto; }
+.pf-root .label { font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--copper); }
+.pf-root .chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 2px; font-size: 11.5px; font-weight: 600; letter-spacing: .02em; }
+.pf-root .chip-k { background: var(--copperbg); color: var(--copper); }
+.pf-root .chip-n { background: var(--paper2); color: var(--ink2); }
+.pf-root .chip-live { background: var(--ink); color: var(--paper); }
+.pf-root .body { font-size: clamp(15px,1.3vw,16.5px); line-height: 1.9; color: var(--ink2); word-break: keep-all; }
+.pf-root .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; border-radius: 2px; font-size: 13.5px; font-weight: 700; text-decoration: none; transition: all .25s; cursor: pointer; }
+.pf-root .btn-ink { background: var(--ink); color: var(--paper); }
+.pf-root .btn-ink:hover { opacity: .85; }
+.pf-root .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--rule); }
+.pf-root .btn-ghost:hover { border-color: var(--ink3); }
+@keyframes heroIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+.pf-root .h-a1 { animation: heroIn .9s cubic-bezier(.22,1,.36,1) .05s both; }
+.pf-root .h-a2 { animation: heroIn .9s cubic-bezier(.22,1,.36,1) .2s both; }
+.pf-root .h-a3 { animation: heroIn .9s cubic-bezier(.22,1,.36,1) .35s both; }
+.pf-root .h-a4 { animation: heroIn .9s cubic-bezier(.22,1,.36,1) .5s both; }
+@media (max-width: 720px) {
+  .pf-hero-bottom { flex-direction: column !important; gap: 16px !important; }
+}
+</style>
+
+<div class="pf-root">
+
+<!-- HERO -->
+<section style="min-height:80vh; display:flex; flex-direction:column; justify-content:center; padding:60px 0 0;">
+  <div class="pg" style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+    <div>
+      <div class="h-a1" style="margin-bottom:28px;">
+        <span class="label">HRD Specialist · 조직문화 · AI 전환</span>
+      </div>
+      <h1 class="h-a2" style="font-size:clamp(2.8rem,6vw,5.5rem); font-weight:900; line-height:1.06; letter-spacing:-.035em; word-break:keep-all; color:var(--ink); margin-bottom:0;">
+        사람이 성장하고<br>
+        <span style="color:var(--copper);">조직이 함께</span><br>
+        좋아지는 곳을<br>
+        만듭니다
+      </h1>
+    </div>
+
+    <div class="h-a3 pf-hero-bottom" style="margin-top:48px; padding:24px 0; border-top:1px solid var(--rule); display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:24px;">
+      <p class="body" style="max-width:460px;">
+        교육 설계와 조직문화를 통해 <strong style="color:var(--ink); font-weight:700;">구성원이 성장하고 싶어지는 환경</strong>을 만듭니다.
+        지금은 <strong style="color:var(--copper); font-weight:700;">AI와 HRD가 만나는 지점</strong>에서 조직의 변화를 직접 이끌고 있습니다.
+      </p>
+      <div style="display:flex; align-items:center; gap:20px; flex-shrink:0;">
+        <div style="text-align:right;">
+          <div style="font-size:11px; color:var(--ink4); letter-spacing:.1em; text-transform:uppercase; margin-bottom:4px;">현재</div>
+          <div style="font-size:13px; font-weight:700; color:var(--ink);">메타넷디지털 · HRD Trainer</div>
+        </div>
+        <span class="chip chip-live" style="font-size:10px; padding:4px 10px;">재직중</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid var(--rule); padding:18px clamp(24px,5vw,72px); display:flex; justify-content:space-between; align-items:center;" class="h-a4">
+    <div style="display:flex; gap:16px; flex-wrap:wrap;">
+      <span class="chip chip-k">패스트캠퍼스 ICA 8기 수료</span>
+      <span class="chip chip-n">사회조사분석사 2급</span>
+      <span class="chip chip-n">GAIQ</span>
+      <span class="chip chip-k">조직 AX 전환 추진중</span>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section style="padding:80px 0; background:var(--white); border-top:1px solid var(--rule);">
+  <div class="pg">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:clamp(32px,5vw,80px); align-items:start;">
+      <div>
+        <p style="font-family:'DM Serif Display',Georgia,serif; font-size:clamp(1.5rem,2.5vw,2.2rem); line-height:1.4; color:var(--ink); font-weight:400; word-break:keep-all; margin-bottom:28px;">
+          "좋은 직장에서<br>좋은 사람들이<br>
+          <em style="color:var(--copper); font-style:italic;">행복하게 일하는<br>세상</em>을 만들고 싶습니다"
+        </p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a href="/about/" class="btn btn-ink">자세히 보기</a>
+          <a href="https://www.linkedin.com/in/soniacho/" target="_blank" class="btn btn-ghost">LinkedIn</a>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:24px;">
+        <div style="padding-left:20px; border-left:2px solid var(--copper);">
+          <p class="body">공공기관 조직문화 개선 프로젝트를 맡았을 때, 제도 하나가 바뀌자 구성원들의 표정이 달라졌습니다. 단순히 일을 잘하는 것과 <strong style="color:var(--ink); font-weight:700;">일하면서 성장한다고 느끼는 것</strong>은 전혀 다른 경험이라는 걸 그때 깨달았습니다.</p>
+        </div>
+        <div style="padding:20px; background:var(--ink); border-radius:2px;">
+          <div class="label" style="color:rgba(255,255,255,.4); margin-bottom:8px;">Now Exploring</div>
+          <p style="font-size:14px; line-height:1.8; color:rgba(255,255,255,.72); word-break:keep-all;">패스트캠퍼스 ICA 8기 수료 후, AI 도구를 교육 설계와 조직문화에 접목하는 방법을 탐구하고 있습니다. 현재 <strong style="color:rgba(255,255,255,.9);">AX(AI Transformation) 전환을 실무에서 직접 추진</strong>하고 있습니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECENT POSTS -->
+<section style="padding:80px 0;">
+  <div class="pg">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:36px;">
+      <h2 style="font-size:1.4rem; font-weight:800; letter-spacing:-.02em; color:var(--ink);">최근 글</h2>
+      <a href="/archives/" style="font-size:12px; font-weight:600; color:var(--copper); text-decoration:none; letter-spacing:.04em;">전체 보기 →</a>
+    </div>
+    {{ range first 3 (where .Site.RegularPages "Section" "post") }}
+    <a href="{{ .Permalink }}" style="display:block; padding:20px 0; border-top:1px solid var(--rule); text-decoration:none; transition:background .2s;">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap;">
+        <div>
+          <div style="font-size:15px; font-weight:700; color:var(--ink); margin-bottom:4px;">{{ .Title }}</div>
+          <div style="font-size:13px; color:var(--ink3);">{{ .Description }}</div>
+        </div>
+        <div style="font-size:12px; color:var(--ink4); flex-shrink:0;">{{ .Date.Format "2006.01.02" }}</div>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section style="background:var(--ink); padding:80px 0;">
+  <div class="pg">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:clamp(32px,5vw,80px); align-items:end;">
+      <div>
+        <h2 style="font-family:'DM Serif Display',Georgia,serif; font-size:clamp(2.2rem,4vw,3.8rem); line-height:1.1; color:#fff; font-weight:400; word-break:keep-all;">
+          함께<br><em style="color:var(--copper2);">이야기</em><br>나눠요
+        </h2>
+      </div>
+      <div style="display:flex; flex-direction:column; border-top:1px solid rgba(255,255,255,.1);">
+        <a href="mailto:sgm04257@naver.com" style="display:flex; align-items:center; justify-content:space-between; padding:18px 0; border-bottom:1px solid rgba(255,255,255,.1); text-decoration:none; color:#fff;">
+          <div>
+            <div style="font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.35); margin-bottom:4px;">Email</div>
+            <div style="font-size:15px; font-weight:700;">sgm04257@naver.com</div>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/soniacho/" target="_blank" style="display:flex; align-items:center; justify-content:space-between; padding:18px 0; border-bottom:1px solid rgba(255,255,255,.1); text-decoration:none; color:#fff;">
+          <div>
+            <div style="font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.35); margin-bottom:4px;">LinkedIn</div>
+            <div style="font-size:15px; font-weight:700;">@soniacho</div>
+          </div>
+        </a>
+        <a href="https://blog.naver.com/sgm04257" target="_blank" style="display:flex; align-items:center; justify-content:space-between; padding:18px 0; border-bottom:1px solid rgba(255,255,255,.1); text-decoration:none; color:#fff;">
+          <div>
+            <div style="font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.35); margin-bottom:4px;">Blog</div>
+            <div style="font-size:15px; font-weight:700;">조소연의 일상 보러가기</div>
+          </div>
+        </a>
+        <div style="padding-top:16px;">
+          <p style="font-size:12px; color:rgba(255,255,255,.3); line-height:1.7; word-break:keep-all;">HRD, 조직문화, AI 도입에 관한 이야기라면 언제든 환영합니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>

@@ -57,28 +57,38 @@ body::before {
 .sidebar {
   background: var(--ink) !important;
   color: var(--paper) !important;
+  padding: 24px 20px !important;
+  overflow: hidden;
 
   .site-name {
     color: #fff !important;
     font-weight: 800 !important;
-    letter-spacing: .04em;
+    font-size: 15px !important;
+    letter-spacing: .02em;
+    word-break: keep-all;
+    line-height: 1.3;
   }
 
   .site-description {
     color: var(--copper2) !important;
-    font-size: 12px !important;
+    font-size: 11px !important;
     font-weight: 600 !important;
-    letter-spacing: .08em;
-    text-transform: uppercase;
+    letter-spacing: .04em;
+    word-break: keep-all;
+    line-height: 1.5;
+    margin-top: 4px;
   }
 
   .menu {
+    margin-top: 16px !important;
+
     li {
       a {
-        color: rgba(255,255,255,.55) !important;
+        color: rgba(255,255,255,.6) !important;
         font-size: 13px !important;
         font-weight: 500 !important;
         border-radius: 2px !important;
+        padding: 8px 12px !important;
         transition: all .2s !important;
 
         &:hover, &.current {
@@ -88,6 +98,7 @@ body::before {
 
         svg {
           color: rgba(255,255,255,.3) !important;
+          flex-shrink: 0;
         }
       }
     }

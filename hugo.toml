@@ -1,8 +1,8 @@
 baseURL = 'https://sgm04257-collab.github.io/'
 languageCode = 'ko'
-title = '조소연 — HRD & 조직문화'
+title = '조소연'
 theme = 'hugo-theme-stack'
-paginate = 8
+paginate = 10
 
 [params]
   mainSections = ['post']
@@ -11,8 +11,9 @@ paginate = 8
 
   [params.sidebar]
     emoji = ''
-    subtitle = 'HRD Specialist · 조직문화 · AI 전환'
+    subtitle = 'HRD · 조직문화 · AI'
     avatar = ""
+    compact = false
 
   [params.article]
     math = false
@@ -25,7 +26,6 @@ paginate = 8
 
   [params.widgets]
     homepage = [
-      { type = 'search' },
       { type = 'categories', limit = 10 },
       { type = 'tag-cloud', limit = 20 },
     ]
@@ -53,19 +53,11 @@ paginate = 8
 
   [[menu.main]]
     identifier = 'archives'
-    name = '아카이브'
+    name = '글 목록'
     url = '/archives/'
     weight = 3
     [menu.main.params]
       icon = 'archives'
-
-  [[menu.main]]
-    identifier = 'search'
-    name = '검색'
-    url = '/search/'
-    weight = 4
-    [menu.main.params]
-      icon = 'search'
 
   [[menu.social]]
     identifier = 'email'
