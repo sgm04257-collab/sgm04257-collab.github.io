@@ -1,0 +1,108 @@
+baseURL = 'https://sgm04257-collab.github.io/'
+languageCode = 'ko'
+title = '조소연 — HRD & 조직문화'
+theme = 'hugo-theme-stack'
+paginate = 8
+
+[params]
+  mainSections = ['post']
+  favicon = ''
+  description = '좋은 사람들이 좋은 곳에서 행복하게 일하는 세상을 만듭니다.'
+
+  [params.sidebar]
+    emoji = ''
+    subtitle = 'HRD Specialist · 조직문화 · AI 전환'
+    avatar = ""
+
+  [params.article]
+    math = false
+    toc = true
+    readingTime = true
+    license = { enabled = false }
+
+  [params.comments]
+    enabled = false
+
+  [params.widgets]
+    homepage = [
+      { type = 'search' },
+      { type = 'categories', limit = 10 },
+      { type = 'tag-cloud', limit = 20 },
+    ]
+
+  [params.colorScheme]
+    toggle = true
+    default = 'auto'
+
+[menu]
+  [[menu.main]]
+    identifier = 'home'
+    name = '홈'
+    url = '/'
+    weight = 1
+    [menu.main.params]
+      icon = 'home'
+
+  [[menu.main]]
+    identifier = 'about'
+    name = '소개'
+    url = '/about/'
+    weight = 2
+    [menu.main.params]
+      icon = 'user'
+
+  [[menu.main]]
+    identifier = 'archives'
+    name = '아카이브'
+    url = '/archives/'
+    weight = 3
+    [menu.main.params]
+      icon = 'archives'
+
+  [[menu.main]]
+    identifier = 'search'
+    name = '검색'
+    url = '/search/'
+    weight = 4
+    [menu.main.params]
+      icon = 'search'
+
+  [[menu.social]]
+    identifier = 'email'
+    name = 'Email'
+    url = 'mailto:sgm04257@naver.com'
+    [menu.social.params]
+      icon = 'email'
+
+  [[menu.social]]
+    identifier = 'linkedin'
+    name = 'LinkedIn'
+    url = 'https://www.linkedin.com/in/soniacho/'
+    [menu.social.params]
+      icon = 'linkedin'
+
+  [[menu.social]]
+    identifier = 'blog'
+    name = 'Blog'
+    url = 'https://blog.naver.com/sgm04257'
+    [menu.social.params]
+      icon = 'link'
+
+[related]
+  includeNewer = true
+  threshold = 60
+  toLower = false
+
+  [[related.indices]]
+    name = 'tags'
+    weight = 100
+
+  [[related.indices]]
+    name = 'categories'
+    weight = 200
+
+[markup]
+  [markup.highlight]
+    noClasses = false
+  [markup.goldmark.renderer]
+    unsafe = true

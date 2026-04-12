@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git --version)",
+      "Bash(where gh:*)",
+      "Bash(winget install:*)",
+      "Bash(export PATH=\"/c/Program Files/GitHub CLI:$PATH\")",
+      "Bash(gh auth:*)",
+      "Bash(start \"https://github.com/login/device\")",
+      "Bash(gh repo:*)",
+      "Bash(gh api:*)",
+      "WebFetch(domain:www.thescoop.co.kr)",
+      "Bash(gh run:*)",
+      "Bash(export PATH=\"/c/Users/Metanet/AppData/Local/Microsoft/WinGet/Links:$PATH\")",
+      "Bash(hugo version:*)",
+      "Read(//c/Users/Metanet/AppData/Local/Microsoft/WinGet/Links/**)",
+      "Read(//c/Users/Metanet/AppData/Local/Microsoft/WinGet/Packages/**)",
+      "Read(//c/Users/Metanet/AppData/Local/Microsoft/WinGet/**)",
+      "Bash(/c/Users/Metanet/AppData/Local/Microsoft/WinGet/Packages/Hugo.Hugo.Extended_Microsoft.Winget.Source_8wekyb3d8bbwe/hugo.exe version:*)",
+      "Bash(mv index.html _old_index.html)",
+      "Bash(/c/Users/Metanet/AppData/Local/Microsoft/WinGet/Packages/Hugo.Hugo.Extended_Microsoft.Winget.Source_8wekyb3d8bbwe/hugo.exe new:*)",
+      "Bash(/c/Users/Metanet/AppData/Local/Microsoft/WinGet/Packages/Hugo.Hugo.Extended_Microsoft.Winget.Source_8wekyb3d8bbwe/hugo.exe --gc --minify)"
+    ]
+  }
+}
