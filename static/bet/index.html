@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 월드컵 스코어 베팅 🇰🇷</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --korea: #0047A0;
+      --korea-bg: #EEF4FF;
+      --korea-mid: #C5D8FF;
+      --draw: #B8860B;
+      --draw-bg: #FFF8E1;
+      --draw-mid: #FFE082;
+      --czech: #C0001C;
+      --czech-bg: #FFF0F0;
+      --czech-mid: #FFCDD2;
+      --text: #111827;
+      --text-sub: #6B7280;
+      --text-muted: #9CA3AF;
+      --border: #E5E7EB;
+      --border-strong: #D1D5DB;
+      --bg: #F3F4F6;
+      --surface: #FFFFFF;
+      --radius-sm: 6px;
+      --radius: 10px;
+      --radius-lg: 14px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+      --shadow: 0 4px 12px rgba(0,0,0,.07), 0 1px 3px rgba(0,0,0,.05);
+      --shadow-lg: 0 20px 50px rgba(0,0,0,.14), 0 4px 12px rgba(0,0,0,.08);
+    }
+
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      word-break: keep-all;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── 헤더 ── */
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      box-shadow: var(--shadow-sm);
+    }
+    .header-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .header-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    .header-badge {
+      background: var(--czech);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.4px;
+    }
+    .cheer-btn {
+      background: linear-gradient(135deg, #C0001C 0%, #8B0015 100%);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity .15s, transform .1s;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(192,0,28,.3);
+    }
+    .cheer-btn:hover { opacity: .88; transform: translateY(-1px); }
+    .cheer-btn:active { transform: translateY(0); }
+
+    /* ── 안내 배너 ── */
+    .banner {
+      max-width: 1160px;
+      margin: 1.1rem auto 0;
+      padding: 0 1.5rem;
+    }
+    .banner-inner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 11px 16px;
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .rule-item { font-size: 12px; color: var(--text-sub); display: flex; align-items: center; gap: 6px; }
+    .rule-num {
+      background: var(--text);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .rule-warn { color: var(--czech); font-weight: 700; font-size: 12px; }
+
+    /* ── 페이지 그리드 ── */
+    .page {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 1.1rem 1.5rem 3.5rem;
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    /* ── 왼쪽 패널 ── */
+    .left-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+      position: sticky;
+      top: 70px;
+      box-shadow: var(--shadow-sm);
+    }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .panel-label { font-size: 12px; color: var(--text-sub); font-weight: 600; }
+    .count-badge {
+      background: var(--text);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 5px;
+    }
+    .add-btn {
+      width: 100%;
+      padding: 9px;
+      border: 1.5px dashed var(--border-strong);
+      border-radius: var(--radius);
+      background: transparent;
+      color: var(--text-sub);
+      font-size: 12px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: border-color .15s, color .15s, background .15s;
+    }
+    .add-btn:hover { border-color: var(--text); color: var(--text); background: var(--bg); }
+
+    .p-list-wrap { max-height: 380px; overflow-y: auto; }
+    .p-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--bg);
+      animation: fadeSlide .2s ease;
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .p-item:last-child { border-bottom: none; }
+    .p-left { display: flex; align-items: center; gap: 6px; min-width: 0; }
+    .p-name { font-size: 12px; color: var(--text); font-weight: 500; truncate: ellipsis; overflow: hidden; white-space: nowrap; max-width: 90px; }
+    .p-score {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 5px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .p-score.korea { background: var(--korea-bg); color: var(--korea); }
+    .p-score.draw  { background: var(--draw-bg); color: var(--draw); }
+    .p-score.czech { background: var(--czech-bg); color: var(--czech); }
+    .p-del {
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 15px;
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: color .12s, background .12s;
+    }
+    .p-del:hover { color: var(--czech); background: var(--czech-bg); }
+
+    .total-box {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .total-amount { font-size: 13px; font-weight: 800; color: var(--text); }
+    .total-sub { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+    .empty-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 20px 0 14px;
+    }
+    .empty-hint-icon { font-size: 24px; display: block; margin-bottom: 6px; }
+
+    /* ── 보드 탭 (모바일) ── */
+    .board-tabs {
+      display: none;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .b-tab {
+      flex: 1;
+      padding: 8px 4px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-sub);
+      cursor: pointer;
+      text-align: center;
+      transition: all .15s;
+      font-family: inherit;
+    }
+    .b-tab.active-korea { border-color: var(--korea); background: var(--korea-bg); color: var(--korea); }
+    .b-tab.active-draw  { border-color: var(--draw);  background: var(--draw-bg);  color: var(--draw); }
+    .b-tab.active-czech { border-color: var(--czech); background: var(--czech-bg); color: var(--czech); }
+
+    /* ── 스코어 보드 ── */
+    .board-headers {
+      display: grid;
+      grid-template-columns: 1fr .5fr 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .col-head {
+      text-align: center;
+      padding: 10px 6px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: -.2px;
+    }
+    .col-head.korea { background: linear-gradient(135deg, #0047A0 0%, #003080 100%); color: #fff; }
+    .col-head.draw  { background: linear-gradient(135deg, #D4A017 0%, #B8860B 100%); color: #fff; }
+    .col-head.czech { background: linear-gradient(135deg, #C0001C 0%, #8B0015 100%); color: #fff; }
+
+    .board-cols {
+      display: grid;
+      grid-template-columns: 1fr .5fr 1fr;
+      gap: 8px;
+    }
+    .board-col-wrap { display: flex; flex-direction: column; gap: 5px; }
+
+    /* 숨김 (모바일 탭 전환용) */
+    .board-col-wrap.hidden { display: none; }
+
+    .score-row {
+      display: grid;
+      gap: 5px;
+    }
+    .score-row.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .score-row.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .score-row.cols-1 { grid-template-columns: 1fr; }
+
+    .s-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 7px 4px 6px;
+      text-align: center;
+      min-height: 52px;
+      transition: border-color .15s, background .15s, box-shadow .15s;
+    }
+    .s-card:hover { box-shadow: var(--shadow-sm); }
+    .s-card.lit-korea { border-color: var(--korea-mid); background: var(--korea-bg); box-shadow: 0 2px 8px rgba(0,71,160,.1); }
+    .s-card.lit-draw  { border-color: var(--draw-mid);  background: var(--draw-bg);  box-shadow: 0 2px 8px rgba(184,134,11,.1); }
+    .s-card.lit-czech { border-color: var(--czech-mid); background: var(--czech-bg); box-shadow: 0 2px 8px rgba(192,0,28,.1); }
+
+    .s-score { font-size: 13px; font-weight: 700; color: var(--text); }
+    .s-prize { font-size: 9px; color: var(--text-muted); margin-top: 1px; }
+    .s-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2px;
+      justify-content: center;
+      margin-top: 5px;
+    }
+    .s-chip {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 20px;
+      max-width: 52px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .s-chip.korea { background: var(--korea-mid); color: var(--korea); }
+    .s-chip.draw  { background: var(--draw-mid);  color: var(--draw); }
+    .s-chip.czech { background: var(--czech-mid); color: var(--czech); }
+
+    /* ── 커스텀 확인 다이얼로그 ── */
+    .confirm-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 60;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      backdrop-filter: blur(2px);
+    }
+    .confirm-overlay.open { display: flex; }
+    .confirm-box {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem 1.5rem 1.25rem;
+      width: 320px;
+      max-width: 100%;
+      box-shadow: var(--shadow-lg);
+      animation: popIn .18s ease;
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(.95); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .confirm-msg { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 1rem; line-height: 1.5; }
+    .confirm-btns { display: flex; gap: 8px; justify-content: flex-end; }
+    .btn-cancel {
+      padding: 8px 16px;
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--text-sub);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background .12s;
+    }
+    .btn-cancel:hover { background: var(--bg); }
+    .btn-danger {
+      padding: 8px 16px;
+      border: none;
+      border-radius: var(--radius);
+      background: var(--czech);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity .12s;
+    }
+    .btn-danger:hover { opacity: .85; }
+
+    /* ── 등록 모달 ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 50;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      backdrop-filter: blur(2px);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      width: 520px;
+      max-width: 100%;
+      max-height: 90dvh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      animation: popIn .18s ease;
+    }
+    .modal-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.3rem;
+    }
+    .modal-title { font-size: 17px; font-weight: 800; color: var(--text); }
+    .modal-close {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: none;
+      font-size: 17px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-sub);
+      font-family: inherit;
+      transition: background .12s, color .12s;
+      flex-shrink: 0;
+    }
+    .modal-close:hover { background: var(--border-strong); color: var(--text); }
+
+    .form-group { margin-bottom: 1.1rem; }
+    .form-label { font-size: 12px; font-weight: 700; color: var(--text-sub); margin-bottom: 7px; display: block; text-transform: uppercase; letter-spacing: .4px; }
+    .name-input {
+      width: 100%;
+      padding: 11px 13px;
+      font-size: 15px;
+      font-family: inherit;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      outline: none;
+      background: var(--surface);
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .name-input:focus { border-color: var(--text); box-shadow: 0 0 0 3px rgba(17,24,39,.07); }
+    .name-input::placeholder { color: var(--text-muted); }
+
+    .outcome-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 7px;
+    }
+    .outcome-tab {
+      padding: 10px 4px;
+      text-align: center;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--bg);
+      transition: all .15s;
+      user-select: none;
+    }
+    .outcome-tab:hover { border-color: var(--border-strong); color: var(--text-sub); background: var(--surface); }
+    .outcome-tab.sel-korea { border-color: var(--korea); background: var(--korea-bg); color: var(--korea); }
+    .outcome-tab.sel-draw  { border-color: var(--draw);  background: var(--draw-bg);  color: var(--draw); }
+    .outcome-tab.sel-czech { border-color: var(--czech); background: var(--czech-bg); color: var(--czech); }
+
+    .score-section { display: none; }
+    .scores-picker { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+    .score-pill {
+      padding: 6px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      background: var(--surface);
+      color: var(--text);
+      transition: all .12s;
+      user-select: none;
+    }
+    .score-pill:hover:not(.taken) { border-color: var(--border-strong); background: var(--bg); }
+    .score-pill.taken { opacity: .3; cursor: not-allowed; text-decoration: line-through; }
+    .score-pill.sel-korea { background: var(--korea); border-color: var(--korea); color: #fff; }
+    .score-pill.sel-draw  { background: var(--draw);  border-color: var(--draw);  color: #fff; }
+    .score-pill.sel-czech { background: var(--czech); border-color: var(--czech); color: #fff; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 13px;
+      background: var(--text);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 15px;
+      font-weight: 800;
+      font-family: inherit;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: opacity .15s, transform .1s;
+    }
+    .submit-btn:hover:not(:disabled) { opacity: .85; transform: translateY(-1px); }
+    .submit-btn:active:not(:disabled) { transform: translateY(0); }
+    .submit-btn:disabled { opacity: .3; cursor: not-allowed; }
+    .err-msg { font-size: 11px; color: var(--czech); margin-top: 5px; display: none; font-weight: 600; }
+
+    /* ── 반응형 ── */
+    @media (max-width: 720px) {
+      .page { grid-template-columns: 1fr; padding-top: 1rem; }
+      .left-panel { position: static; }
+      .board-tabs { display: flex; }
+      .board-headers { display: none; }
+      .board-cols { grid-template-columns: 1fr; }
+      .banner-inner { flex-direction: column; gap: .6rem; align-items: flex-start; }
+    }
+    @media (max-width: 480px) {
+      .header-inner { height: 52px; }
+      .header-title { font-size: 13px; }
+      .cheer-btn { padding: 7px 11px; font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-title">
+      🇰🇷 대한민국 vs 🇨🇿 체코
+      <span class="header-badge">2026 월드컵</span>
+    </div>
+    <button class="cheer-btn" id="cheer-btn">🇰🇷 응원가 ▶</button>
+  </div>
+</header>
+
+<!-- 당첨 기준 배너 -->
+<div class="banner">
+  <div class="banner-inner">
+    <div class="rule-item"><span class="rule-num">1</span> 승패 + 스코어 완벽 일치 → 판돈 전액</div>
+    <div class="rule-item"><span class="rule-num">2</span> 승무패 + 점수 차 일치 → 판돈 전액</div>
+    <div class="rule-item"><span class="rule-num">3</span> 승무패만 일치 → 판돈 N빵</div>
+    <div class="rule-warn">💸 미송금 시 하루 1만원 이자</div>
+  </div>
+</div>
+
+<!-- 메인 그리드 -->
+<div class="page">
+
+  <!-- 왼쪽 패널 -->
+  <div class="left-panel">
+    <div class="panel-header">
+      <span class="panel-label">참가자 명단</span>
+      <span class="count-badge" id="cnt">0명</span>
+    </div>
+    <button class="add-btn" id="add-btn">+ 참가자 등록하기</button>
+    <div class="p-list-wrap">
+      <div id="p-list"><div class="empty-hint"><span class="empty-hint-icon">🎯</span>아직 참가자가 없어요</div></div>
+    </div>
+    <div class="total-box">
+      <div class="total-amount" id="total-amt">걷힌 총액 0원</div>
+      <div class="total-sub" id="total-sub">베팅 0건 × 10,000원</div>
+    </div>
+  </div>
+
+  <!-- 오른쪽: 스코어 보드 -->
+  <div>
+    <!-- 모바일 탭 -->
+    <div class="board-tabs" id="board-tabs">
+      <button class="b-tab active-korea" data-col="korea">🇰🇷 한국 승</button>
+      <button class="b-tab" data-col="draw">🟡 무승부</button>
+      <button class="b-tab" data-col="czech">🇨🇿 체코 승</button>
+    </div>
+
+    <!-- 데스크탑 헤더 -->
+    <div class="board-headers">
+      <div class="col-head korea">🇰🇷 한국 승</div>
+      <div class="col-head draw">🟡 무승부</div>
+      <div class="col-head czech">🇨🇿 체코 승</div>
+    </div>
+
+    <div class="board-cols" id="board-cols">
+      <div class="board-col-wrap" id="col-korea"></div>
+      <div class="board-col-wrap" id="col-draw"></div>
+      <div class="board-col-wrap" id="col-czech"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 커스텀 삭제 확인 다이얼로그 -->
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-box">
+    <div class="confirm-msg" id="confirm-msg"></div>
+    <div class="confirm-btns">
+      <button class="btn-cancel" id="confirm-cancel">취소</button>
+      <button class="btn-danger" id="confirm-ok">삭제</button>
+    </div>
+  </div>
+</div>
+
+<!-- 등록 모달 -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-top">
+      <span class="modal-title">참가자 등록</span>
+      <button class="modal-close" id="modal-close">×</button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">이름</label>
+      <input class="name-input" id="fname" type="text" placeholder="이름을 입력하세요" autocomplete="off" />
+      <div class="err-msg" id="name-err"></div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">예상 결과</label>
+      <div class="outcome-tabs" id="outcome-tabs">
+        <div class="outcome-tab" data-outcome="korea">🇰🇷 한국 승</div>
+        <div class="outcome-tab" data-outcome="draw">🟡 무승부</div>
+        <div class="outcome-tab" data-outcome="czech">🇨🇿 체코 승</div>
+      </div>
+    </div>
+
+    <div class="form-group score-section" id="score-section">
+      <label class="form-label" id="score-label">예상 스코어</label>
+      <div class="scores-picker" id="scores-picker"></div>
+      <div class="err-msg" id="score-err"></div>
+    </div>
+
+    <button class="submit-btn" id="submit-btn" disabled>등록하기</button>
+  </div>
+</div>
+
+<audio id="cheer-audio" loop>
+  <source src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Korea_Republic_FA.ogg" type="audio/ogg">
+</audio>
+
+<script>
+// ── 데이터 ──
+const SCORES = {
+  korea: ['1:0','2:0','2:1','3:0','3:1','3:2','4:0','4:1','4:2','4:3','5:0','5:1','5:2','5:3','5:4','6:0','6:1','6:2','6:3','6:4','6:5'],
+  draw:  ['0:0','1:1','2:2','3:3','4:4','5:5','6:6'],
+  czech: ['0:1','0:2','1:2','0:3','1:3','2:3','0:4','1:4','2:4','3:4','0:5','1:5','2:5','3:5','4:5','0:6','1:6','2:6','3:6','4:6','5:6']
+};
+const BOARD = {
+  korea: [['1:0','2:0','2:1'],['3:0','3:1','3:2'],['4:0','4:1','4:2'],['4:3','5:0','5:1'],['5:2','5:3','5:4'],['6:0','6:1','6:2'],['6:3','6:4','6:5']],
+  draw:  [['0:0','1:1'],['2:2','3:3'],['4:4','5:5'],['6:6']],
+  czech: [['0:1','0:2','1:2'],['0:3','1:3','2:3'],['0:4','1:4','2:4'],['3:4','0:5','1:5'],['2:5','3:5','4:5'],['0:6','1:6','2:6'],['3:6','4:6','5:6']]
+};
+
+// ── 상태 ──
+let participants = loadData();
+let selOutcome = null;
+let selScore = null;
+let activeCol = 'korea'; // 모바일 탭
+
+// localStorage
+function loadData() {
+  try { return JSON.parse(localStorage.getItem('wc2026-bet') || '[]'); }
+  catch { return []; }
+}
+function saveData() {
+  try { localStorage.setItem('wc2026-bet', JSON.stringify(participants)); }
+  catch {}
+}
+
+// ── 이름 안전 출력 ──
+function esc(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// ── 모달 ──
+function openModal() {
+  resetForm();
+  document.getElementById('modal').classList.add('open');
+  setTimeout(() => document.getElementById('fname').focus(), 60);
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+document.getElementById('add-btn').addEventListener('click', openModal);
+document.getElementById('modal-close').addEventListener('click', closeModal);
+document.getElementById('modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal')) closeModal();
+});
+
+function resetForm() {
+  document.getElementById('fname').value = '';
+  hideEl('name-err'); hideEl('score-err');
+  document.getElementById('score-section').style.display = 'none';
+  document.querySelectorAll('.outcome-tab').forEach(t => t.className = 'outcome-tab');
+  selOutcome = null; selScore = null;
+  document.getElementById('submit-btn').disabled = true;
+}
+
+// ── 결과 선택 ──
+document.getElementById('outcome-tabs').addEventListener('click', e => {
+  const tab = e.target.closest('.outcome-tab');
+  if (!tab) return;
+  selectOutcome(tab.dataset.outcome);
+});
+
+function selectOutcome(type) {
+  selOutcome = type; selScore = null;
+  document.querySelectorAll('.outcome-tab').forEach(t => {
+    t.className = 'outcome-tab' + (t.dataset.outcome === type ? ' sel-' + type : '');
+  });
+  const sec = document.getElementById('score-section');
+  sec.style.display = 'block';
+  document.getElementById('score-label').textContent =
+    type === 'draw' ? '예상 스코어 (동점)' : '예상 스코어 (한국 : 체코)';
+  renderPicker(type);
+  validate();
+}
+
+// ── 스코어 선택 ──
+document.getElementById('scores-picker').addEventListener('click', e => {
+  const pill = e.target.closest('.score-pill');
+  if (!pill || pill.classList.contains('taken')) return;
+  selScore = pill.dataset.score;
+  hideEl('score-err');
+  renderPicker(selOutcome);
+  validate();
+});
+
+function renderPicker(type) {
+  const taken = new Set(participants.map(p => p.score));
+  document.getElementById('scores-picker').innerHTML = SCORES[type].map(s => {
+    const isTaken = taken.has(s);
+    const selCls  = selScore === s ? ' sel-' + type : '';
+    const tkCls   = isTaken ? ' taken' : '';
+    return `<span class="score-pill${selCls}${tkCls}" data-score="${s}">${s}</span>`;
+  }).join('');
+}
+
+// ── 유효성 ──
+document.getElementById('fname').addEventListener('input', () => {
+  hideEl('name-err'); validate();
+});
+function validate() {
+  const name = document.getElementById('fname').value.trim();
+  document.getElementById('submit-btn').disabled = !(name && selOutcome && selScore);
+}
+
+// ── 등록 ──
+document.getElementById('submit-btn').addEventListener('click', submitForm);
+function submitForm() {
+  const name = document.getElementById('fname').value.trim();
+  if (!name) { showErr('name-err','이름을 입력해주세요.'); return; }
+  if (participants.some(p => p.name === name)) { showErr('name-err','이미 등록된 이름입니다.'); return; }
+  if (!selScore) { showErr('score-err','스코어를 선택해주세요.'); return; }
+  participants.push({ name, outcome: selOutcome, score: selScore });
+  saveData();
+  closeModal();
+  renderAll();
+}
+
+// ── 삭제 (커스텀 confirm) ──
+let pendingDeleteName = null;
+document.getElementById('p-list').addEventListener('click', e => {
+  const btn = e.target.closest('.p-del');
+  if (!btn) return;
+  pendingDeleteName = btn.dataset.name;
+  document.getElementById('confirm-msg').textContent = `"${pendingDeleteName}" 참가자를 삭제할까요?`;
+  document.getElementById('confirm-overlay').classList.add('open');
+});
+document.getElementById('confirm-cancel').addEventListener('click', () => {
+  document.getElementById('confirm-overlay').classList.remove('open');
+  pendingDeleteName = null;
+});
+document.getElementById('confirm-ok').addEventListener('click', () => {
+  if (pendingDeleteName) {
+    participants = participants.filter(p => p.name !== pendingDeleteName);
+    saveData();
+    renderAll();
+  }
+  document.getElementById('confirm-overlay').classList.remove('open');
+  pendingDeleteName = null;
+});
+
+// ── 모바일 탭 ──
+document.getElementById('board-tabs').addEventListener('click', e => {
+  const btn = e.target.closest('.b-tab');
+  if (!btn) return;
+  activeCol = btn.dataset.col;
+  document.querySelectorAll('.b-tab').forEach(b => b.className = 'b-tab');
+  btn.className = 'b-tab active-' + activeCol;
+  updateColVisibility();
+});
+function updateColVisibility() {
+  const isMobile = window.innerWidth <= 720;
+  ['korea','draw','czech'].forEach(c => {
+    const el = document.getElementById('col-' + c);
+    if (isMobile) {
+      el.classList.toggle('hidden', c !== activeCol);
+    } else {
+      el.classList.remove('hidden');
+    }
+  });
+}
+window.addEventListener('resize', updateColVisibility);
+
+// ── 응원가 ──
+let playing = false;
+document.getElementById('cheer-btn').addEventListener('click', () => {
+  const audio = document.getElementById('cheer-audio');
+  if (playing) { audio.pause(); audio.currentTime = 0; playing = false; document.getElementById('cheer-btn').textContent = '🇰🇷 응원가 ▶'; }
+  else { audio.play().catch(()=>{}); playing = true; document.getElementById('cheer-btn').textContent = '⏹ 응원가 ■'; }
+});
+
+// ── 렌더링 ──
+function renderAll() { renderLeft(); renderBoard(); }
+
+function renderLeft() {
+  const el = document.getElementById('p-list');
+  if (participants.length === 0) {
+    el.innerHTML = '<div class="empty-hint"><span class="empty-hint-icon">🎯</span>아직 참가자가 없어요</div>';
+  } else {
+    el.innerHTML = participants.map(p =>
+      `<div class="p-item">
+        <div class="p-left">
+          <span class="p-name" title="${esc(p.name)}">${esc(p.name)}</span>
+          <span class="p-score ${p.outcome}">${esc(p.score)}</span>
+        </div>
+        <span class="p-del" data-name="${esc(p.name)}" title="삭제">×</span>
+      </div>`
+    ).join('');
+  }
+  document.getElementById('cnt').textContent = participants.length + '명';
+  const total = participants.length * 10000;
+  document.getElementById('total-amt').textContent = '걷힌 총액 ' + total.toLocaleString() + '원';
+  document.getElementById('total-sub').textContent = '베팅 ' + participants.length + '건 × 10,000원';
+}
+
+function renderBoard() {
+  ['korea','draw','czech'].forEach(type => {
+    const col = document.getElementById('col-' + type);
+    col.innerHTML = BOARD[type].map(row => {
+      const cls = row.length === 1 ? 'cols-1' : row.length === 2 ? 'cols-2' : 'cols-3';
+      return '<div class="score-row ' + cls + '">' + row.map(score => {
+        const betters = participants.filter(p => p.score === score);
+        const prizeHtml = betters.length > 0
+          ? `<div class="s-prize">적중 시 ${Math.round(participants.length * 10000 / betters.length).toLocaleString()}원</div>`
+          : '';
+        const litCls = betters.length > 0 ? ' lit-' + type : '';
+        const chips = betters.map(b => `<span class="s-chip ${b.outcome}" title="${esc(b.name)}">${esc(b.name)}</span>`).join('');
+        return `<div class="s-card${litCls}">
+          <div class="s-score">${score}</div>
+          ${prizeHtml}
+          <div class="s-chips">${chips}</div>
+        </div>`;
+      }).join('') + '</div>';
+    }).join('');
+  });
+  updateColVisibility();
+}
+
+function showErr(id, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+function hideEl(id) { document.getElementById(id).style.display = 'none'; }
+
+// 초기 렌더
+renderAll();
+</script>
+</body>
+</html>
