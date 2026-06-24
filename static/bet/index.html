@@ -648,8 +648,23 @@
   <source src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Korea_Republic_FA.ogg" type="audio/ogg">
 </audio>
 
-<script>
-// ── 데이터 ──
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDhiDmuqvwD4y1LxJAWs0j0Z7-wXU6wZYY",
+  authDomain: "worldcup2026-13a5f.firebaseapp.com",
+  projectId: "worldcup2026-13a5f",
+  storageBucket: "worldcup2026-13a5f.firebasestorage.app",
+  messagingSenderId: "86820472963",
+  appId: "1:86820472963:web:f9d4afa34b972818e973b6"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const COLL = 'bets-czech';
+const COLS = ['korea','draw','czech'];
+
 const SCORES = {
   korea: ['1:0','2:0','2:1','3:0','3:1','3:2','4:0','4:1','4:2','4:3','5:0','5:1','5:2','5:3','5:4','6:0','6:1','6:2','6:3','6:4','6:5'],
   draw:  ['0:0','1:1','2:2','3:3','4:4','5:5','6:6'],
@@ -661,26 +676,21 @@ const BOARD = {
   czech: [['0:1','0:2','1:2'],['0:3','1:3','2:3'],['0:4','1:4','2:4'],['3:4','0:5','1:5'],['2:5','3:5','4:5'],['0:6','1:6','2:6'],['3:6','4:6','5:6']]
 };
 
-// ── 상태 ──
-let participants = loadData();
+let participants = [];
 let selOutcome = null;
 let selScore = null;
-let activeCol = 'korea'; // 모바일 탭
+let activeCol = 'korea';
 
-// localStorage
-function loadData() {
-  try { return JSON.parse(localStorage.getItem('wc2026-bet') || '[]'); }
-  catch { return []; }
-}
-function saveData() {
-  try { localStorage.setItem('wc2026-bet', JSON.stringify(participants)); }
-  catch {}
-}
-
-// ── 이름 안전 출력 ──
 function esc(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
+
+// ── Firestore 실시간 구독 ──
+const q = query(collection(db, COLL), orderBy('createdAt'));
+onSnapshot(q, snap => {
+  participants = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderAll();
+});
 
 // ── 모달 ──
 function openModal() {
@@ -688,9 +698,7 @@ function openModal() {
   document.getElementById('modal').classList.add('open');
   setTimeout(() => document.getElementById('fname').focus(), 60);
 }
-function closeModal() {
-  document.getElementById('modal').classList.remove('open');
-}
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
 
 document.getElementById('add-btn').addEventListener('click', openModal);
 document.getElementById('modal-close').addEventListener('click', closeModal);
@@ -711,21 +719,16 @@ function resetForm() {
 document.getElementById('outcome-tabs').addEventListener('click', e => {
   const tab = e.target.closest('.outcome-tab');
   if (!tab) return;
-  selectOutcome(tab.dataset.outcome);
-});
-
-function selectOutcome(type) {
-  selOutcome = type; selScore = null;
+  selOutcome = tab.dataset.outcome; selScore = null;
   document.querySelectorAll('.outcome-tab').forEach(t => {
-    t.className = 'outcome-tab' + (t.dataset.outcome === type ? ' sel-' + type : '');
+    t.className = 'outcome-tab' + (t.dataset.outcome === selOutcome ? ' sel-' + selOutcome : '');
   });
-  const sec = document.getElementById('score-section');
-  sec.style.display = 'block';
+  document.getElementById('score-section').style.display = 'block';
   document.getElementById('score-label').textContent =
-    type === 'draw' ? '예상 스코어 (동점)' : '예상 스코어 (한국 : 체코)';
-  renderPicker(type);
+    selOutcome === 'draw' ? '예상 스코어 (동점)' : '예상 스코어 (한국 : 체코)';
+  renderPicker(selOutcome);
   validate();
-}
+});
 
 // ── 스코어 선택 ──
 document.getElementById('scores-picker').addEventListener('click', e => {
@@ -741,55 +744,48 @@ function renderPicker(type) {
   const taken = new Set(participants.map(p => p.score));
   document.getElementById('scores-picker').innerHTML = SCORES[type].map(s => {
     const isTaken = taken.has(s);
-    const selCls  = selScore === s ? ' sel-' + type : '';
-    const tkCls   = isTaken ? ' taken' : '';
-    return `<span class="score-pill${selCls}${tkCls}" data-score="${s}">${s}</span>`;
+    return `<span class="score-pill${selScore===s?' sel-'+type:''}${isTaken?' taken':''}" data-score="${s}">${s}</span>`;
   }).join('');
 }
 
-// ── 유효성 ──
-document.getElementById('fname').addEventListener('input', () => {
-  hideEl('name-err'); validate();
-});
+document.getElementById('fname').addEventListener('input', () => { hideEl('name-err'); validate(); });
 function validate() {
   const name = document.getElementById('fname').value.trim();
   document.getElementById('submit-btn').disabled = !(name && selOutcome && selScore);
 }
 
-// ── 등록 ──
-document.getElementById('submit-btn').addEventListener('click', submitForm);
-function submitForm() {
+// ── 등록 → Firestore ──
+document.getElementById('submit-btn').addEventListener('click', async () => {
   const name = document.getElementById('fname').value.trim();
   if (!name) { showErr('name-err','이름을 입력해주세요.'); return; }
   if (participants.some(p => p.name === name)) { showErr('name-err','이미 등록된 이름입니다.'); return; }
   if (!selScore) { showErr('score-err','스코어를 선택해주세요.'); return; }
-  participants.push({ name, outcome: selOutcome, score: selScore });
-  saveData();
-  closeModal();
-  renderAll();
-}
+  document.getElementById('submit-btn').disabled = true;
+  try {
+    await addDoc(collection(db, COLL), { name, outcome: selOutcome, score: selScore, createdAt: serverTimestamp() });
+    closeModal();
+  } catch { showErr('name-err','저장 중 오류가 발생했습니다.'); document.getElementById('submit-btn').disabled = false; }
+});
 
-// ── 삭제 (커스텀 confirm) ──
-let pendingDeleteName = null;
+// ── 삭제 → Firestore ──
+let pendingDeleteId = null;
 document.getElementById('p-list').addEventListener('click', e => {
   const btn = e.target.closest('.p-del');
   if (!btn) return;
-  pendingDeleteName = btn.dataset.name;
-  document.getElementById('confirm-msg').textContent = `"${pendingDeleteName}" 참가자를 삭제할까요?`;
+  pendingDeleteId = btn.dataset.id;
+  document.getElementById('confirm-msg').textContent = `"${btn.dataset.name}" 참가자를 삭제할까요?`;
   document.getElementById('confirm-overlay').classList.add('open');
 });
 document.getElementById('confirm-cancel').addEventListener('click', () => {
   document.getElementById('confirm-overlay').classList.remove('open');
-  pendingDeleteName = null;
+  pendingDeleteId = null;
 });
-document.getElementById('confirm-ok').addEventListener('click', () => {
-  if (pendingDeleteName) {
-    participants = participants.filter(p => p.name !== pendingDeleteName);
-    saveData();
-    renderAll();
+document.getElementById('confirm-ok').addEventListener('click', async () => {
+  if (pendingDeleteId) {
+    await deleteDoc(doc(db, COLL, pendingDeleteId));
   }
   document.getElementById('confirm-overlay').classList.remove('open');
-  pendingDeleteName = null;
+  pendingDeleteId = null;
 });
 
 // ── 모바일 탭 ──
@@ -803,13 +799,10 @@ document.getElementById('board-tabs').addEventListener('click', e => {
 });
 function updateColVisibility() {
   const isMobile = window.innerWidth <= 720;
-  ['korea','draw','czech'].forEach(c => {
+  COLS.forEach(c => {
     const el = document.getElementById('col-' + c);
-    if (isMobile) {
-      el.classList.toggle('hidden', c !== activeCol);
-    } else {
-      el.classList.remove('hidden');
-    }
+    if (isMobile) el.classList.toggle('hidden', c !== activeCol);
+    else el.classList.remove('hidden');
   });
 }
 window.addEventListener('resize', updateColVisibility);
@@ -827,19 +820,17 @@ function renderAll() { renderLeft(); renderBoard(); }
 
 function renderLeft() {
   const el = document.getElementById('p-list');
-  if (participants.length === 0) {
-    el.innerHTML = '<div class="empty-hint"><span class="empty-hint-icon">🎯</span>아직 참가자가 없어요</div>';
-  } else {
-    el.innerHTML = participants.map(p =>
-      `<div class="p-item">
-        <div class="p-left">
-          <span class="p-name" title="${esc(p.name)}">${esc(p.name)}</span>
-          <span class="p-score ${p.outcome}">${esc(p.score)}</span>
-        </div>
-        <span class="p-del" data-name="${esc(p.name)}" title="삭제">×</span>
-      </div>`
-    ).join('');
-  }
+  el.innerHTML = participants.length === 0
+    ? '<div class="empty-hint"><span class="empty-hint-icon">🎯</span>아직 참가자가 없어요</div>'
+    : participants.map(p =>
+        `<div class="p-item">
+          <div class="p-left">
+            <span class="p-name" title="${esc(p.name)}">${esc(p.name)}</span>
+            <span class="p-score ${p.outcome}">${esc(p.score)}</span>
+          </div>
+          <span class="p-del" data-id="${p.id}" data-name="${esc(p.name)}" title="삭제">×</span>
+        </div>`
+      ).join('');
   document.getElementById('cnt').textContent = participants.length + '명';
   const total = participants.length * 10000;
   document.getElementById('total-amt').textContent = '걷힌 총액 ' + total.toLocaleString() + '원';
@@ -847,20 +838,17 @@ function renderLeft() {
 }
 
 function renderBoard() {
-  ['korea','draw','czech'].forEach(type => {
+  COLS.forEach(type => {
     const col = document.getElementById('col-' + type);
     col.innerHTML = BOARD[type].map(row => {
       const cls = row.length === 1 ? 'cols-1' : row.length === 2 ? 'cols-2' : 'cols-3';
       return '<div class="score-row ' + cls + '">' + row.map(score => {
         const betters = participants.filter(p => p.score === score);
         const prizeHtml = betters.length > 0
-          ? `<div class="s-prize">적중 시 ${Math.round(participants.length * 10000 / betters.length).toLocaleString()}원</div>`
-          : '';
-        const litCls = betters.length > 0 ? ' lit-' + type : '';
+          ? `<div class="s-prize">적중 시 ${Math.round(participants.length * 10000 / betters.length).toLocaleString()}원</div>` : '';
         const chips = betters.map(b => `<span class="s-chip ${b.outcome}" title="${esc(b.name)}">${esc(b.name)}</span>`).join('');
-        return `<div class="s-card${litCls}">
-          <div class="s-score">${score}</div>
-          ${prizeHtml}
+        return `<div class="s-card${betters.length > 0 ? ' lit-'+type : ''}">
+          <div class="s-score">${score}</div>${prizeHtml}
           <div class="s-chips">${chips}</div>
         </div>`;
       }).join('') + '</div>';
@@ -869,15 +857,8 @@ function renderBoard() {
   updateColVisibility();
 }
 
-function showErr(id, msg) {
-  const el = document.getElementById(id);
-  el.textContent = msg;
-  el.style.display = 'block';
-}
+function showErr(id, msg) { const el = document.getElementById(id); el.textContent = msg; el.style.display = 'block'; }
 function hideEl(id) { document.getElementById(id).style.display = 'none'; }
-
-// 초기 렌더
-renderAll();
 </script>
 </body>
 </html>
