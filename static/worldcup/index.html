@@ -737,10 +737,9 @@ document.getElementById('scores-picker').addEventListener('click', e => {
 });
 
 function renderPicker(type) {
-  const taken = new Set(participants.map(p => p.score));
-  document.getElementById('scores-picker').innerHTML = SCORES[type].map(s => {
-    return `<span class="score-pill${selScore===s?' sel-'+type:''}${taken.has(s)?' taken':''}" data-score="${s}">${s}</span>`;
-  }).join('');
+  document.getElementById('scores-picker').innerHTML = SCORES[type].map(s =>
+    `<span class="score-pill${selScore===s?' sel-'+type:''}" data-score="${s}">${s}</span>`
+  ).join('');
 }
 
 document.getElementById('fname').addEventListener('input', () => { hideEl('name-err'); validate(); });
